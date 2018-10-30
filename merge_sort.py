@@ -4,6 +4,7 @@ import random
 def merge_sort_algorithm(input_array):
     # step 1: divide input array recursively
     def merge_sort(input_array):
+        
         n = len(input_array)
         if n == 1:
             return input_array
@@ -11,9 +12,10 @@ def merge_sort_algorithm(input_array):
         mid = int(n / 2)
         list_one = input_array[:mid]
         list_two = input_array[mid:]
-
-        list_one = merge_sort_algorithm(list_one)
-        list_two = merge_sort_algorithm(list_two)
+        
+        list_one = merge_sort(list_one)
+        list_two = merge_sort(list_two)
+        
 
         return merge(list_one, list_two)
 
@@ -41,6 +43,6 @@ def merge_sort_algorithm(input_array):
         return final_list
     return merge_sort(input_array)
 
-input = random.sample(range(16), 16)
+input = random.sample(range(4), 4)
 print(input)
 print(merge_sort_algorithm(input))
