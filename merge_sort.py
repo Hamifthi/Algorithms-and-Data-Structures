@@ -9,9 +9,9 @@ def merge_sort_algorithm(input_array):
         if n == 1:
             return input_array
         
-        mid = int(n / 2)
-        list_one = input_array[:mid]
-        list_two = input_array[mid:]
+        middle = n / 2
+        list_one = input_array[:int(middle)]
+        list_two = input_array[int(middle):]
         
         list_one = merge_sort(list_one)
         list_two = merge_sort(list_two)
@@ -43,6 +43,7 @@ def merge_sort_algorithm(input_array):
         return final_list
     return merge_sort(input_array)
 
-input = random.sample(range(4), 4)
-print(input)
-print(merge_sort_algorithm(input))
+if __name__ == '__main__':
+    input = random.sample(range(4), 4)
+    print(input)
+    print(merge_sort_algorithm(input))
