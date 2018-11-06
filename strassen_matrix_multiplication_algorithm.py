@@ -30,15 +30,15 @@ def matrix_multiplication_algorithm(array_a, array_b):
         return F11, F12, F21, F22
 
 
-
-
-
-
-
-
-
+    def final_array_result():
+        A, B, C, D, E, F, G, H = divide_matrix()
+        P1, P2, P3, P4, P5, P6, P7 = seven_blocks_multiplication(A, B, C, D, E, F, G, H)
+        F11, F12, F21, F22 = calculate_final_result(P1, P2, P3, P4, P5, P6, P7)
+        final_array = np.array([F11, F12, F21, F22]).reshape(2, 2)
+        return final_array
+    return final_array_result()
 
 a = np.arange(0, 4).reshape(2, 2)
 b = np.arange(4, 8).reshape(2, 2)
-sth = matrix_multiplication_algorithm(a, b)()
+sth = matrix_multiplication_algorithm(a, b)
 print(sth)
