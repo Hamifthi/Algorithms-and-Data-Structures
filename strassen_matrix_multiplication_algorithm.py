@@ -15,10 +15,10 @@ def matrix_multiplication_algorithm(array_a, array_b):
             return final_array_result(F11, F12, F21, F22)
 
         # this is the recursion part
-        part1 = divide_matrix(A, E)
-        part2 = divide_matrix(B, F)
-        part3 = divide_matrix(C, G)
-        part4 = divide_matrix(D, H)
+        part1 = np.add(divide_matrix(A, E), divide_matrix(B, G))
+        part2 = np.add(divide_matrix(A, F), divide_matrix(B, H))
+        part3 = np.add(divide_matrix(C, E), divide_matrix(D, G))
+        part4 = np.add(divide_matrix(C, F), divide_matrix(D, H))
         
         # return final calculated array
         return final_array_result(part1, part2, part3, part4)
@@ -42,14 +42,16 @@ def matrix_multiplication_algorithm(array_a, array_b):
 
     # assembling final output here
     def final_array_result(F11, F12, F21, F22):
-        # calculating output array dimensions here
-        n = 2 * F11.shape[0]
+        # stacking different parts here
+        horizontal_part1 = np.hstack([F11, F12])
+        horizontal_part2 = np.hstack([F21, F22])
+        final_array = np.vstack([horizontal_part1, horizontal_part2])
         # return final array here
-        return np.array([F11, F12, F21, F22]).reshape(n, n)
+        return final_array
 
     return divide_matrix(array_a, array_b)
 
-a = np.arange(0, 16).reshape(4, 4)
-b = np.arange(16, 32).reshape(4, 4)
+a = np.arange(1, 65).reshape(8, 8)
+b = np.arange(1, 65).reshape(8, 8)
 sth = matrix_multiplication_algorithm(a, b)
 print(sth)
