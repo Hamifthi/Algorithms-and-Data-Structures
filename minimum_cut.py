@@ -4,36 +4,35 @@ import random
 class Graph:
     def __init__(self, graph_dict):
         if graph_dict == None:
-            self.__graph_dict = {}
-        self.__graph_dict = graph_dict
-        self.vertices = []
-        self.edges = []
+            self.graph_dict = {}
+        self.graph_dict = graph_dict
+        self.__vertices = []
 
     def add_vertex(self, list_of_vertices_name):
         for name in list_of_vertices_name:
-            self.__graph_dict[str(name)] = []
+            self.graph_dict[str(name)] = []
     
     def add_edge(self, vertex1, vertex2):
         for vertex in [vertex1, vertex2]:
-            if str(vertex) not in self.__graph_dict.keys():
-                self.__graph_dict[str(vertex)] = []
-        self.__graph_dict[str(vertex1)].append(vertex2)
-        self.__graph_dict[str(vertex2)].append(vertex1)
+            if str(vertex) not in self.graph_dict.keys():
+                self.graph_dict[str(vertex)] = []
+        self.graph_dict[str(vertex1)].append(vertex2)
+        self.graph_dict[str(vertex2)].append(vertex1)
     
-    def present_vertices(self):
-        return list(self.__graph_dict.keys())
+    def vertices(self):
+        return list(self.graph_dict.keys())
 
-    def present_edges(self):
-        return list(self.__graph_dict.values())
+    def edges(self):
+        return list(self.graph_dict.values())
 
     def present_graph(self):
-        return self.__graph_dict
+        return self.graph_dict
 
     def minimum_cut(self):
-        graph_info = {**self.__graph_dict}
+        graph_info = {**self.graph_dict}
         # put vertices in a seperate value to have how many numbers of it i have and also can delete from it
-        self.vertices = list(self.__graph_dict.keys())
-        while len(self.vertices) > 2:
+        self.__vertices = list(self.graph_dict.keys())
+        while len(self.__vertices) > 2:
             # choose an edge for merge
             edges = [edge for edges in graph_info.values() for edge in edges]
             edges = list(set(edges))
@@ -43,7 +42,7 @@ class Graph:
             # choose which vertex of selected edge i should merge
             vertex = random.choice([keys for keys, values in graph_info.items() for value in values if value == edge])
             print(vertex)
-            self.vertices.remove(vertex)
+            self.__vertices.remove(vertex)
 
             # delete connection or edges of merged vertex from connected vertices
             for key in graph_info.keys():
@@ -67,25 +66,26 @@ class Graph:
                 except IndexError:
                     pass
 
-            # print(len(self.vertices))
+            # print(len(self.__vertices))
             print(graph_info)
         min_edge = 0
         for value in graph_info.values():
             min_edge += len(value)
         return min_edge
 
-example = {'1': [2, 4],
+if __name__=='__main__':
+    example = {'1': [2, 4],
            '2': [1, 3, 4],
            '3': [2, 4],
            '4': [1, 3, 2]}
 
-example = Graph(example)
-# print(example.present_graph())
-# example.add_vertex([5])
-# print(example.present_graph())
-# example.add_edge(5, 2)
-# example.add_edge(5, 6)
-print(example.present_graph())
-# print(example.present_vertices())
-# print(example.present_edges())
-print(example.minimum_cut())
+    example = Graph(example)
+    print(example.present_graph())
+    example.add_vertex([5])
+    print(example.present_graph())
+    example.add_edge(5, 2)
+    example.add_edge(5, 6)
+    print(example.present_graph())
+    print(example.vertices())
+    print(example.edges())
+    print(example.minimum_cut())
