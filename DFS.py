@@ -1,7 +1,6 @@
 import numpy as np
 import random
 from graph import Graph
-from stack import Stack
 
 def depth_first_search(graph, vertex = None, first_time = False):
     if first_time:
