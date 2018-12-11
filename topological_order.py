@@ -37,5 +37,15 @@ if __name__=='__main__':
             '9': [8],
             '10': [9]}
 
-    example = Graph(example)
-    print(topological_order(example))
+    example2 = {'0': [],
+            '1': [],
+            '2': [3],
+            '3': [1],
+            '4': [0, 1],
+            '5': [0, 2],
+            }
+
+    # example = Graph(example)
+    # print(topological_order(example))
+    example2 = Graph(example2)
+    print(topological_order(example2))

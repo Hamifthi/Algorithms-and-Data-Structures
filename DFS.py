@@ -44,6 +44,41 @@ def traverse_entire_graph(graph):
     return list(set([item for vertices in all_traversed_vetices for item in vertices]))
 
 
+def depth_first_search_v2(graph, vertex = None):
+
+    def recursive_depth_first_search(vertex, marked_vertecies):
+        marked_vertecies[vertex - 1] = 1
+
+        for edge in graph.graph_dict[str(vertex)]:
+            if edge == None: break
+            if marked_vertecies[edge - 1] == 0:
+                recursive_depth_first_search(edge, marked_vertecies)
+
+        traversed_vertecies.append(vertex)
+    
+
+    marked_vertecies = np.zeros(len(graph.vertices()))
+    traversed_vertecies = []
+
+    if vertex == None:
+        started_vertex = int(random.choice(graph.vertices()))
+        while len(graph.graph_dict[str(started_vertex)]) == 0:
+            started_vertex = int(random.choice(graph.vertices()))
+        vertex = started_vertex
+
+    recursive_depth_first_search(vertex, marked_vertecies)
+
+    for vertex in graph.vertices():
+        vertex = int(vertex)
+        if marked_vertecies[vertex - 1] == 0:
+            recursive_depth_first_search(vertex, marked_vertecies)
+
+    return traversed_vertecies, marked_vertecies
+
+
+
+
+
 
 if __name__=='__main__':
     example = {'1': [2, 4],
@@ -53,4 +88,4 @@ if __name__=='__main__':
             '5': []}
 
     example = Graph(example)
-    print(traverse_entire_graph(example))
+    print(depth_first_search_v2(example))
