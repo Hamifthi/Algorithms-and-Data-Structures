@@ -61,7 +61,39 @@ def strongly_connected_component(graph):
 
         return f_times
 
-    return first_dfs
+    def changing_vertices_to_right_place(f_times = first_dfs()):
+        temporary_dictionary = {}
+        for step in range(len(graph.vertices())):
+            temporary_dictionary[str(int(f_times[step]))] = []
+            for edge in graph.graph_dict[str(step + 1)]:
+                temporary_dictionary[str(int(f_times[step]))].append(int(f_times[edge - 1]))
+        graph.graph_dict = {**temporary_dictionary}
+        return graph
+
+    def second_dfs():
+        graph = changing_vertices_to_right_place()
+        marked_vertecies = np.zeros(len(graph.vertices()))
+        list_of_connected_component = []
+        internal_connected_component = []
+
+        def recursive_depth_first_search(vertex, marked_vertecies):
+            marked_vertecies[vertex - 1] = 1
+            internal_connected_component.append(vertex)
+
+            for edge in graph.graph_dict[str(vertex)]:
+                if edge == None: break
+                if marked_vertecies[edge - 1] == 0:
+                    recursive_depth_first_search(edge, marked_vertecies)
+
+        for vertex in range(len(graph.vertices()), 0, -1):
+            if marked_vertecies[vertex - 1] == 0:
+                recursive_depth_first_search(vertex, marked_vertecies)
+                list_of_connected_component.append(internal_connected_component)
+                internal_connected_component = []
+        
+        return list_of_connected_component
+
+    return second_dfs
 
 if __name__=='__main__':
     example = {'1': [4],
