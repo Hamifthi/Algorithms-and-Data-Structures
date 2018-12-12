@@ -30,26 +30,34 @@ def strongly_connected_component(graph):
                 marked_vertecies[vertex - 1] = 1
                 stack.push(vertex)
             
-                print(stack.stack)
-                for edge in graph.graph_dict[str(vertex)]:
-                    if edge == None: break
-                    if marked_vertecies[edge - 1] == 0:
-                        recursive_depth_first_search(edge, marked_vertecies, stack)
-            else:
-                try:
-                    vertex = stack.pop()
-                    f_times[vertex - 1] = t
-                    t += 1
-                except IndexError:
-                    pass
+            for edge in graph.graph_dict[str(vertex)]:
+                if edge == None: break
+                if marked_vertecies[edge - 1] == 0:
+                    recursive_depth_first_search(edge, marked_vertecies, stack)
+                else:
+                    try:
+                        vertex = stack.pop()
+                        f_times[vertex - 1] = t
+                        t += 1
+                    except IndexError:
+                        pass
         
         vertex = reversed_graph.vertices()[-1]
         recursive_depth_first_search(int(vertex), marked_vertecies, stack)
+        if not stack.is_empty():
+                for step in range(len(stack.stack)):
+                    vertex = stack.pop()
+                    f_times[vertex - 1] = t
+                    t += 1
 
-        for vertex in graph.vertices():
-            vertex = int(vertex)
+        for vertex in range(len(graph.vertices()), 0, -1):
             if marked_vertecies[vertex - 1] == 0:
                 recursive_depth_first_search(vertex, marked_vertecies, stack)
+                if not stack.is_empty():
+                    for step in range(len(stack.stack)):
+                        vertex = stack.pop()
+                        f_times[vertex - 1] = t
+                        t += 1
 
         return f_times
 
