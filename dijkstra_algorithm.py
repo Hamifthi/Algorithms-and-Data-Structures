@@ -12,6 +12,7 @@ def dijkstra(graph):
     processed_vertices = []
     unprocessed_vertices = []
     total_distances = np.zeros(len(graph.vertices()))
+    
     for step in range(1, len(total_distances)):
         total_distances[step] = np.inf
     for vertex in graph.vertices():

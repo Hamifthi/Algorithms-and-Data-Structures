@@ -4,6 +4,8 @@ class Graph:
             self.graph_dict = {}
         self.graph_dict = graph_dict
         self.type = directed
+        self.vertices = list(self.graph_dict.keys())
+        self.edges = list(self.graph_dict.values())
 
     def add_vertex(self, list_of_vertices_name):
         for name in list_of_vertices_name:

@@ -155,3 +155,4 @@ if __name__=='__main__':
     # print(sth.in_order_traversal(sth.root))
     print(sth.delete_node(5))
     print(sth.in_order_traversal(sth.root))
+    

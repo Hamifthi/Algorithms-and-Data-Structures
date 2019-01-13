@@ -1,3 +1,5 @@
+import sys
+
 class Heap:
     def __init__(self, list_of_elements = None):
         if list_of_elements == None:
@@ -6,14 +8,22 @@ class Heap:
             self.heap = self.heapify(list_of_elements)
             self.length = len(self.heap)
 
-    def heapify(self, elements):
+    def heapify(self, elements = None):
+        if elements == None:
+            elements = self.heap
         while True:
             old_elements = tuple(elements)
             for i in range(int(len(elements) / 2)):
-                if elements[i] > elements[2 * i + 1]:
-                    elements[i], elements[2 * i + 1] = elements[2 * i + 1], elements[i]
-                if elements[i] > elements[2 * i + 2]:
-                    elements[i], elements[2 * i + 2] = elements[2 * i + 2], elements[i]
+                try:
+                    if elements[i] > elements[2 * i + 1]:
+                        elements[i], elements[2 * i + 1] = elements[2 * i + 1], elements[i]
+                except IndexError:
+                    pass
+                try:
+                    if elements[i] > elements[2 * i + 2]:
+                        elements[i], elements[2 * i + 2] = elements[2 * i + 2], elements[i]
+                except IndexError:
+                    pass
             if elements == list(old_elements):
                 break
 
@@ -21,7 +31,7 @@ class Heap:
 
     def bubble_up(self):
         child = self.length - 1
-        parent = int(child / 2)
+        parent = int(child / 2) - 1 if child % 2 == 0 else int(child / 2)
         while self.heap[parent] > self.heap[child] and parent >= 0:
             self.heap[child], self.heap[parent] = self.heap[parent], self.heap[child]
             child = parent
@@ -34,28 +44,44 @@ class Heap:
     
     def bubble_down(self):
         parent = 0
-        child = self.heap[parent * 2 + 1] if self.heap[parent * 2 + 1] < self.heap[parent * 2 + 2] else self.heap[parent * 2 + 2]
-        while self.heap[parent] > self.heap[child]:
-            self.heap[child], self.heap[parent] = self.heap[parent], self.heap[child]
-            parent = child
-            try:
-                child = self.heap[parent * 2 + 1] if self.heap[parent * 2 + 1] < self.heap[parent * 2 + 2] else self.heap[parent * 2 + 2]
-            except IndexError:
-                pass
+        try:
+            child = parent * 2 + 1 if self.heap[parent * 2 + 1] < self.heap[parent * 2 + 2] else parent * 2 + 2
+        except:
+            pass
+        try:
+            while self.heap[parent] > self.heap[child]:
+                self.heap[child], self.heap[parent] = self.heap[parent], self.heap[child]
+                parent = child
+                try:
+                    child = parent * 2 + 1 if self.heap[parent * 2 + 1] < self.heap[parent * 2 + 2] else parent * 2 + 2
+                except IndexError:
+                    pass
+        except:
+            pass
 
     def min(self):
         self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]
-        min = self.heap.pop()
+        minimum = self.heap.pop()
         self.length -= 1
         self.bubble_down()
-        return min
+        return minimum
 
+    def pop(self):
+        self.heap.pop()
+        self.length -= 1
+        
 if __name__=='__main__':
-    example = [4, 4, 8, 9, 4, 12, 9, 11, 13]
+    # example = [4, 4, 8, 9, 4, 12, 9, 11, 13]
 
+    # example = Heap(example)
+    # print(example.heap)
+    # example.insert(1)
+    # print(example.heap)
+    # print(example.min())
+    # print(example.heap)
+    example = [sys.maxsize, sys.maxsize, sys.maxsize, sys.maxsize, sys.maxsize]
     example = Heap(example)
-    print(example.heap)
     example.insert(1)
     print(example.heap)
-    print(example.min())
+    example.insert(7)
     print(example.heap)
