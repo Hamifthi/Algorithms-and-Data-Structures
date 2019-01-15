@@ -31,20 +31,22 @@ class Union_Find:
         return None
 
     def union(self, value1, value2):
-        node1 = self.find_node(value = value1)
-        node2 = self.find_node(value = value2)
-        if len(node1.group) >= len(node2.group):
-            for node in node2.group:
+        node1, node2 = self.find_node(value = value1), self.find_node(value = value2)
+        parent_value1, parent_value2 = self.find_parent(value = node1.value), self.find_parent(value = node2.value)
+        parent_node1, parent_node2 = self.find_node(value = parent_value1), self.find_node(value = parent_value2)
+
+        if len(parent_node1.group) >= len(parent_node2.group):
+            for node in parent_node2.group:
                 node.parent = node1.parent
-                node1.group.append(node)
+                parent_node1.group.append(node)
             node2.parent = node1.parent
-            node1.group.append(node2)
+            parent_node1.group.append(node2)
         else:
             for node in node1.group:
                 node.parent = node2.parent
-                node2.group.append(node)
+                parent_node2.group.append(node)
             node1.parent = node2.parent
-            node2.group.append(node1)
+            parent_node2.group.append(node1)
 
 if __name__=='__main__':
     sth = [1, 2, 3, 4]
