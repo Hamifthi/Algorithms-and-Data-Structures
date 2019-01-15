@@ -20,29 +20,49 @@ class Graph:
             self.graph_dict[str(vertex2)].append(vertex1)
         else:
             self.graph_dict[str(vertex1)].append(vertex2)
-    
-    def vertices(self):
-        return list(self.graph_dict.keys())
-
-    def edges(self):
-        return list(self.graph_dict.values())
 
     def present_graph(self):
         return self.graph_dict
 
+class Sub_Graph(Graph):
+    def __init__(self, graph_dict):
+        super().__init__(graph_dict, True)
+        self.distances = []
+        self.pair_vertices = {}
+        self._make_lists()
+
+    def add_edge(self, vertex1, vertex2, distance):
+        self.graph_dict[str(vertex1)].append([vertex2, distance])
+
+    def _make_lists(self):
+        for key, value in self.graph_dict.items():
+            for pair in value:
+                self.distances.append(pair[1])
+                self.pair_vertices[pair[1]] = [int(key), pair[0]]
+
+
 
 if __name__=='__main__':
-    example = {'1': [2, 4],
+    # graph
+    example1 = {'1': [2, 4],
            '2': [1, 3, 4],
            '3': [2, 4],
            '4': [1, 3, 2]}
-
-    example = Graph(example)
-    print(example.present_graph())
-    example.add_vertex([5])
-    print(example.present_graph())
-    example.add_edge(5, 2)
-    example.add_edge(5, 6)
-    print(example.present_graph())
-    print(example.vertices())
-    print(example.edges())
+    example1 = Graph(example1)
+    print(example1.present_graph())
+    example1.add_vertex([5])
+    print(example1.present_graph())
+    example1.add_edge(5, 2)
+    example1.add_edge(5, 6)
+    print(example1.present_graph())
+    print(example1.vertices)
+    print(example1.edges)
+    # subgraph
+    example2 = {'1': [[2, 3], [3, 6]],
+            '2': [[4, 2]],
+            '3': [[2, 1]],
+            '4': [[1, 5], [3, 4]]
+            }
+    example2 = Sub_Graph(example2)
+    print(example2.distances)
+    print(example2.pair_vertices)
