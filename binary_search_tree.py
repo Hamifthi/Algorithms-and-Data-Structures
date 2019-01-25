@@ -1,9 +1,9 @@
 class Node:
-    def __init__(self, value, parent = None):
+    def __init__(self, value, parent = None, left_child = None, right_child = None):
         self.value = value
         self.parent = parent
-        self.left_child = None
-        self.right_child = None
+        self.left_child = left_child
+        self.right_child = right_child
     
     def print_node(self):
         print(' ', self.parent)
@@ -13,9 +13,9 @@ class Node:
         print(self.right_child, '', self.left_child)
 
 class Binary_Search_Tree:
-    def __init__(self, value = None, left_child = None, right_child = None):
-        if value != None:
-            self.root = Node(value, parent = None)
+    def __init__(self, root_value = None, left_child = None, right_child = None):
+        if root_value != None:
+            self.root = Node(root_value, parent = None)
             if left_child != None:
                 self.root.left_child = left_child
             if right_child != None:
@@ -155,4 +155,3 @@ if __name__=='__main__':
     # print(sth.in_order_traversal(sth.root))
     print(sth.delete_node(5))
     print(sth.in_order_traversal(sth.root))
-    

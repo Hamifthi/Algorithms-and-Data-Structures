@@ -5,7 +5,8 @@ class Heap:
         if list_of_elements == None:
             self.heap = []
         else:
-            self.heap = self.heapify(list_of_elements)
+            self.heap = list(list_of_elements)
+            self.heap = self.heapify(self.heap)
             self.length = len(self.heap)
 
     def heapify(self, elements = None):
@@ -47,7 +48,7 @@ class Heap:
         try:
             child = parent * 2 + 1 if self.heap[parent * 2 + 1] < self.heap[parent * 2 + 2] else parent * 2 + 2
         except:
-            pass
+            child = parent * 2 + 1
         try:
             while self.heap[parent] > self.heap[child]:
                 self.heap[child], self.heap[parent] = self.heap[parent], self.heap[child]
@@ -71,17 +72,17 @@ class Heap:
         self.length -= 1
         
 if __name__=='__main__':
-    # example = [4, 4, 8, 9, 4, 12, 9, 11, 13]
+    example = [4, 4, 8, 9, 4, 12, 9, 11, 13]
 
-    # example = Heap(example)
-    # print(example.heap)
-    # example.insert(1)
-    # print(example.heap)
-    # print(example.min())
-    # print(example.heap)
-    example = [sys.maxsize, sys.maxsize, sys.maxsize, sys.maxsize, sys.maxsize]
     example = Heap(example)
+    print(example.heap)
     example.insert(1)
     print(example.heap)
-    example.insert(7)
+    print(example.min())
     print(example.heap)
+    # example = [sys.maxsize, sys.maxsize, sys.maxsize, sys.maxsize, sys.maxsize]
+    # example = Heap(example)
+    # example.insert(1)
+    # print(example.heap)
+    # example.insert(7)
+    # print(example.heap)
