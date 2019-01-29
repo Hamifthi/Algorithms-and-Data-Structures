@@ -47,7 +47,6 @@ def huffman_code(characters, weights):
         nodes.append(new_node)
         values.append(summed_values)
     
-    # print(address)
     # cleaning address from waste items and only keep first generation weights
     number_of_items_must_be_removed = len(address.items()) - len(weights)
     for item in range(number_of_items_must_be_removed):
@@ -62,7 +61,6 @@ def huffman_code(characters, weights):
             if node.value is key:
                 loop_backed_node = node
         
-        # print(loop_backed_node.value)
         while loop_backed_node.parent is not None:
             parent_node = loop_backed_node.parent
             if parent_node.left_child.value is loop_backed_node.value:
