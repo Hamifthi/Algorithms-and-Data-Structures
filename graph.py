@@ -1,5 +1,4 @@
 import numpy as np
-from collections import defaultdict
 
 class Graph:
     def __init__(self, graph_dict, directed = False):
@@ -28,12 +27,13 @@ class Graph:
         return self.graph_dict
 
 class Sub_Graph(Graph):
-    def __init__(self, graph_dict):
+    def __init__(self, graph_dict, want = False):
         super().__init__(graph_dict, True)
-        self.distances = []
-        self._make_list_of_distances()
-        self.pair_vertices = {int(key):[] for key in self.distances}
-        self._make_list_of_pair_vertices()
+        if want:
+            self.distances = []
+            self._make_list_of_distances()
+            self.pair_vertices = {int(key):[] for key in self.distances}
+            self._make_list_of_pair_vertices()
 
     def add_edge(self, vertex1, vertex2, distance):
         self.graph_dict[str(vertex1)].append([vertex2, distance])
