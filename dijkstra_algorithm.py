@@ -1,7 +1,7 @@
 from graph import Sub_Graph
 import numpy as np
 
-def dijkstra(graph, src):
+def dijkstra(graph, src:int):
     unprocessed_vertices = []
     total_distances = np.zeros(len(graph.vertices))
     
@@ -14,7 +14,10 @@ def dijkstra(graph, src):
     distances = [0]
 
     while len(unprocessed_vertices) != 0:
-        value = np.min(distances)
+        try:
+            value = np.min(distances)
+        except ValueError:
+            return total_distances
         i = 0
         vertex = np.where(total_distances == value)[0][i]
         if str(vertex) not in unprocessed_vertices:
@@ -22,15 +25,18 @@ def dijkstra(graph, src):
                 i += 1
                 vertex = np.where(total_distances == value)[0][i]
 
-        for edge, distance in graph.graph_dict[str(vertex)]:
-            if total_distances[edge] > total_distances[vertex] + distance:
-                try:
-                    index = np.where(distances == total_distances[edge])[0][0]
-                    distances = np.delete(distances, index)
-                except IndexError:
-                    pass
-                total_distances[edge] = total_distances[vertex] + distance
-                distances = np.append(distances, total_distances[vertex] + distance)
+        try:
+            for edge, distance in graph.graph_dict[str(vertex)]:
+                if total_distances[edge] > total_distances[vertex] + distance:
+                    try:
+                        index = np.where(distances == total_distances[edge])[0][0]
+                        distances = np.delete(distances, index)
+                    except IndexError:
+                        pass
+                    total_distances[edge] = total_distances[vertex] + distance
+                    distances = np.append(distances, total_distances[vertex] + distance)
+        except ValueError:
+            pass
 
         unprocessed_vertices.remove(str(vertex))
 
